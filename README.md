@@ -1,0 +1,2 @@
+# RecRadiko
+Radikoで配信されているラジオ番組を録音するためのShellScript
