@@ -4,12 +4,11 @@ require 'date'
 require 'open-uri'
 
 URL_TIMETABLE_XML = 'http://radiko.jp/v2/api/program/station/weekly?station_id='
-DOC_ROOT_URL = "http://jagabouz.com"
-DOC_ROOT_DIR = "/home/jagapi/nginx/jagabouz.com/www" # @raspi
-#DOC_ROOT_DIR = "/Users/sputnikiMac/dev/raspi_dev_space/raspi_podcast" # @iMac
-FILE_URL = DOC_ROOT_URL + "/podcast/episodes/" + ARGV[0] + ".m4a"
-FILE_PATH = DOC_ROOT_DIR + "/podcast/episodes/" + ARGV[0] + ".m4a"
-TODAY = Time.now.strftime("%a, %d %b %Y %H:%M:%S +0900")
+DOC_ROOT_URL      = "http://jagabouz.com"
+DOC_ROOT_DIR      = "/home/jagapi/nginx/jagabouz.com/www" # @raspi
+FILE_URL          = DOC_ROOT_URL + "/podcast/episodes/" + ARGV[0] + ".m4a"
+FILE_PATH         = DOC_ROOT_DIR + "/podcast/episodes/" + ARGV[0] + ".m4a"
+TODAY             = Time.now.strftime("%a, %d %b %Y %H:%M:%S +0900")
 
 def getFileSize(filePath)
   if File.exist?(filePath) then

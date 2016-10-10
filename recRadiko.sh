@@ -150,15 +150,22 @@ record() {
 
   avconv -ss ${starting} -i "${wkdir}/${tempname}.flv" \
     -acodec copy "${wkdir}/${tempname}.m4a"
-  mv -b "${wkdir}/${tempname}.m4a" "${outdir}/${filename}.m4a"
+
+  if ( -e "${outdir}/${prog_name}" ) then
+    # do nothing
+  else
+    # create directory
+    mkdir -p "${outdir}/${prog_name}"
+  fi
+  mv -b "${wkdir}/${tempname}.m4a" "${outdir}/${prog_name}/${filename}.m4a"
   rm -f "${wkdir}/${tempname}.flv"
 
   if [ $? -ne 0 ]; then
     echo "[stop] failed move file (${wkdir}/${tempname}.m4a to \
-      ${outdir}/${filename}.m4a)" 1>&2 ; exit 1
+      ${outdir}/${prog_name}/${filename}.m4a)" 1>&2 ; exit 1
   fi
 
-  ruby /home/jagapi/nginx/jagabouz.com/www/podcast/.res/updateRSS.rb ${filename} ${channel}
+  ruby /home/jagapi/nginx/jagabouz.com/www/podcast/.res/updateRSS.rb ${filename} ${channel} ${prog_name}
 }
 
 # Play
@@ -200,6 +207,7 @@ do
       VALUE_d="$OPTARG"
       ;;
     f ) OPTION_f=true
+      VALUE_PROG_NAME="$OPTARG"
       VALUE_f="${ymddate}_${OPTARG}"
       ;;
     t ) OPTION_t=true
@@ -249,6 +257,7 @@ if [ ! "${OPTION_p}" ]; then
   outdir=${PWD}
 
   # Get File Name
+  prog_name=$VALUE_PROG_NAME
   filename=${VALUE_f:=${channel}_${date}_${pid}}
   tempname=${channel}_${pid}
 
